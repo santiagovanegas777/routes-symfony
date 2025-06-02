@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController
+class DefaultController extends AbstractController
 {
     public function saludo()
     {
@@ -23,10 +24,18 @@ class DefaultController
         ];
 
         
-        // return new Response("Soy $name $surname y tengo $age años");
+        // return new Response("<h1>Soy $name $surname y tengo $age años</h1>");
         
         //ahora devolveremos un json
-        return new JsonResponse($user);
+        // return new JsonResponse($user);
+
+        //ahora utilizaremos twing para mostrarlo en el html
+
+        return $this->render("base.html.twig", [
+            "nombre" => $name,
+            "apellido" => $surname,
+            "edad" => $age
+        ]);
     }
 
     #[Route("/user/{name}/{surname}/edad/{age}", methods: ["POST", "PUT"])]
